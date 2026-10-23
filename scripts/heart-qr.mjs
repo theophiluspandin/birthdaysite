@@ -14,15 +14,18 @@ const qr = QRCode.create(url, { errorCorrectionLevel: 'H' });
 const n = qr.modules.size;
 const cell = 10;
 const W = 900;
-const H = 820;
+const H = 900;
 const qrPx = n * cell;
+// Heart: center (W/2, CY), scale S px per unit. Lobes reach ~1.2 units up, tip 1 unit down.
+const S = 330;
+const CY = 430;
 const ox = (W - qrPx) / 2;
-const oy = 300 - qrPx / 2 + 40;
+const oy = CY - 40 - qrPx / 2; // QR sits in the wide upper-middle of the heart
 
 // Heart shape test in normalized coords: (x^2 + y^2 - 1)^3 - x^2 y^3 <= 0
 const inHeart = (px, py) => {
-  const x = (px - W / 2) / (W * 0.42);
-  const y = -(py - H * 0.44) / (H * 0.42);
+  const x = (px - W / 2) / S;
+  const y = -(py - CY) / S;
   return Math.pow(x * x + y * y - 1, 3) - x * x * y * y * y <= 0;
 };
 
