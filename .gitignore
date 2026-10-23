@@ -1,0 +1,5 @@
+node_modules
+dist
+heart-qr.svg
+heart-qr.html
+.vercel
