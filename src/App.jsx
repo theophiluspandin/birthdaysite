@@ -303,6 +303,24 @@ function MusicSection() {
 }
 
 /* ---------------- 4. Camera + Notepad + Cake ---------------- */
+// Muted looping clip; started explicitly because some browsers (esp. iOS Safari)
+// ignore the autoplay attribute on elements added after page load.
+function CameraVideo({ src, label }) {
+  const ref = useRef(null);
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    v.muted = true;
+    v.defaultMuted = true;
+    v.setAttribute('muted', '');
+    const start = () => v.play().catch(() => {});
+    start();
+    v.addEventListener('canplay', start);
+    return () => v.removeEventListener('canplay', start);
+  }, [src]);
+  return <video ref={ref} src={src} className="w-full h-full object-cover object-center" autoPlay muted loop playsInline preload="auto" aria-label={label} />;
+}
+
 function Camera() {
   const photos = CONFIG.photos.camera;
   const [i, setI] = useState(0);
@@ -319,7 +337,7 @@ function Camera() {
           <AnimatePresence initial={false}>
             <motion.div key={i} initial={{ opacity: 0, scale: 1.08 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.9 }} className="absolute inset-0">
               {/\.(mp4|webm)$/i.test(photos[i]) ? (
-                <video src={photos[i]} className="w-full h-full object-cover object-center" autoPlay muted loop playsInline aria-label={`${R.nickname}の動画`} />
+                <CameraVideo src={photos[i]} label={`${R.nickname}の動画`} />
               ) : (
                 <Img src={photos[i]} alt={`${R.nickname}の写真`} className="w-full h-full object-cover" />
               )}
