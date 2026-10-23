@@ -318,7 +318,11 @@ function Camera() {
         <div className="relative aspect-[4/3] rounded-lg bg-black overflow-hidden ring-4 ring-[#14306e]">
           <AnimatePresence initial={false}>
             <motion.div key={i} initial={{ opacity: 0, scale: 1.08 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.9 }} className="absolute inset-0">
-              <Img src={photos[i]} alt={`${R.nickname}の写真`} className="w-full h-full object-cover" />
+              {/\.(mp4|webm)$/i.test(photos[i]) ? (
+                <video src={photos[i]} className="w-full h-full object-cover object-center" autoPlay muted loop playsInline aria-label={`${R.nickname}の動画`} />
+              ) : (
+                <Img src={photos[i]} alt={`${R.nickname}の写真`} className="w-full h-full object-cover" />
+              )}
             </motion.div>
           </AnimatePresence>
           <div className="absolute inset-2 pointer-events-none text-white text-[9px] font-mono">

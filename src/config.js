@@ -44,7 +44,7 @@ export const CONFIG = {
 
   photos: {
     // Retro camera LCD slideshow (use the < > buttons on the camera)
-    camera: ['/photos/photo1.jpg', '/photos/photo4.jpg', '/photos/photo3.jpg', '/photos/photo2.jpg', '/photos/photo5.jpg'],
+    camera: ['/photos/photo1.jpg', '/photos/photo4.jpg', '/photos/photo3.jpg', '/photos/photo2.jpg', '/photos/camera-video.mp4'], // .mp4 entries play as muted looping video
     // Oval portrait in the final section
     portrait: '/photos/photo1.jpg',
     // Used automatically if a photo above fails to load
